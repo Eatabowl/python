@@ -9,23 +9,23 @@ from fake_useragent import UserAgent
 book_name = input("请输入搜索书名：")
 url_search = 'https://so.biqusoso.com/s.php?ie=gbk&siteid=biqukan.com&s=2758772450457967865&q='
 
-# driver = webdriver.Firefox()
+driver = webdriver.Firefox()
 
 ua = UserAgent()
 headers = {
     'User-Agent': ua.random
 }
 
-''' driver.get('http://www.bqkan.com/')
+driver.get('http://www.bqkan.com/')
 time.sleep(5)
 driver.find_element_by_name("q").send_keys(book_name)
-river.find_element_by_class_name("btn").click()
+driver.find_element_by_class_name("btn").click()
 windows = driver.window_handles
 driver.switch_to.window(windows[1])
 time.sleep(5)
 
 url = driver.current_url
-print(url) '''
+print(url) 
 respose = requests.get(url_search,headers = headers)
 html = respose.text
 #print(html)
@@ -35,4 +35,4 @@ chap = bs.find_all('a')
 tmp = 0
 for each in chap:
     tmp+=1
-    print(str(tmp)+"."+each.string)
+    print(str(tmp)+"."+each.string+each.get('href'))
