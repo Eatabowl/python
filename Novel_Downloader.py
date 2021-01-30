@@ -9,6 +9,8 @@ from fake_useragent import UserAgent
 from requests.models import Response
 from tqdm.std import tqdm
 
+server = 'http://www.bqkan.com/'
+
 ua = UserAgent()
 headers = {
     'User-Agent': ua.random
@@ -52,7 +54,7 @@ def getChapters(url):
     html = respose.text
     div_bf = BeautifulSoup(html,'lxml')
     div = div_bf.find_all('div', class_ = 'listmain')
-    print(div[0])
+    # print(div[0])
     a_bf = BeautifulSoup(str(div[0]),'lxml')
     chapter = a_bf.find_all('a')
     # div = bs.find_all('div',class_='lismain')
@@ -61,27 +63,28 @@ def getChapters(url):
     # chaptertmp = chapters.find_all('dt')
     # chapter = chapters.find_all('a')
     for each in tqdm(chapter):   
+        time.sleep(random.uniform(1,2))
         chapDir = each.string           #提取目录
-        chapUrl = url+each.get('href')  #具体章节链接   urlzhisever
-        print(chapUrl)
-        print(chapDir)
-        print('hehehhehehhehehehehehehehehehehe')
+        chapUrl = server+each.get('href')  #具体章节链接   urlzhisever
+        # print(chapUrl)
+        # print(chapDir)
+        # print('hehehhehehhehehehehehehehehehehe')
         getContent(chapUrl, chapDir)
     return
 
 
 
 def getContent(chapUrl, chapDir):
-    print(chapUrl)
-    print(chapDir)
+    # print(chapUrl)
+    # print(chapDir)
     respose = requests.get(url = chapUrl, headers = headers)
-    print(respose.request.headers)
+    # print(respose.request.headers)
     # print(res.status_code)
     # print(res.request.headers)
     html = respose.text
     bf = BeautifulSoup(html,'lxml')
     texts = bf.find_all('div', class_ = 'showtxt')
-    print(texts[0])
+    # print(texts[0])
     texts = texts[0].text.replace('\xa0'*8,'\n\n')
     # contents = bs.find_all('div',class_ = 'showtxt')
     # content = contents.text.replace('\xa0'*8,'\n\n')
@@ -101,7 +104,8 @@ if __name__ == '__main__':
     printList(chap)
     selection = int(input("select a book"))
     url_novel = selectBook(chap,selection)
-    print(url_novel)
+    # print(url_novel)
+    # print('urlllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll')
     getChapters(url_novel)
 
     
